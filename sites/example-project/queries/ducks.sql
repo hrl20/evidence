@@ -1,0 +1,1 @@
+select x as beak_width, x+1 as beak_depth from generate_series(1,10) g(x)

@@ -17,6 +17,10 @@ const config = {
 		]
 	},
 	server: {
+		headers: {
+			"Cross-Origin-Embedder-Policy": "require-corp",
+			"Cross-Origin-Opener-Policy": "same-origin",
+		},
 		fs: {
 			strict: process.env.NODE_ENV !== 'development'
 		},

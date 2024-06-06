@@ -66,6 +66,14 @@ export async function initDB() {
 			}
 		});
 		connection = await db.connect();
+		query("SELECT version()");
+		await connection.query(`SET custom_extension_repository="https://app.motherduck.com/main@3648d81ed5466497d6691be8727098469b01f448/duckdb-wasm";`);
+		await connection.query(`LOAD motherduck`);
+		await connection.query(`RESET custom_extension_repository;`);
+		await connection.query(`SET MOTHERDUCK_TOKEN=''`);
+		await connection.query(`SET MOTHERDUCK_HOST='api.motherduck.com'`);
+		// await connection.query(`ATTACH 'md:ducks'`);
+		query("SHOW databases");
 		resolveInit();
 	} catch (e) {
 		rejectInit(e);
@@ -150,7 +158,13 @@ export async function query(sql) {
 	await withTimeout(tablesPromise);
 
 	// Now we can safely execute our query
-	const res = await connection.query(sql).then(arrowTableToJSON);
+	// const res = await connection.query(sql).then(arrowTableToJSON);
+	const res = await connection.query(sql).then((response) => {
+		console.log(`Received response: ${response}`);
+		return arrowTableToJSON(response);
+	  });
+	console.log(`"Result for query ${sql}:"`);
+	console.log(res);
 
 	return res;
 }

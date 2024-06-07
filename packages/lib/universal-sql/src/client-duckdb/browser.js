@@ -1,4 +1,4 @@
-import { arrowTableToJSON, getPromise, withTimeout } from './both.js';
+import { arrowTableToJSON, apacheToEvidenceType, getPromise, withTimeout } from './both.js';
 import {
 	AsyncDuckDB,
 	ConsoleLogger,
@@ -8,12 +8,17 @@ import {
 } from '@duckdb/duckdb-wasm';
 
 export { tableFromIPC } from 'apache-arrow';
+import * as arrow from 'apache-arrow';
+import { MDConnection } from '@motherduck/wasm-client';
 
 /** @type {import("@duckdb/duckdb-wasm").AsyncDuckDB} */
 let db;
 
 /** @type {import("@duckdb/duckdb-wasm").AsyncDuckDBConnection} */
 let connection;
+
+/** @type {import("@motherduck/wasm-client").MDConnection} */
+let md_connection;
 
 const { resolve: resolveInit, reject: rejectInit, promise: initPromise } = getPromise();
 const { resolve: resolveTables, reject: rejectTables, promise: tablesPromise } = getPromise();
@@ -66,15 +71,15 @@ export async function initDB() {
 			}
 		});
 		connection = await db.connect();
-		query("SELECT version()");
-		await connection.query(`SET custom_extension_repository="https://app.motherduck.com/main@3648d81ed5466497d6691be8727098469b01f448/duckdb-wasm";`);
-		await connection.query(`LOAD motherduck`);
-		await connection.query(`RESET custom_extension_repository;`);
-		await connection.query(`SET MOTHERDUCK_TOKEN=''`);
-		await connection.query(`SET MOTHERDUCK_HOST='api.motherduck.com'`);
-		// await connection.query(`ATTACH 'md:ducks'`);
-		query("SHOW databases");
+		
 		resolveInit();
+
+		const token = '';
+		md_connection = MDConnection.create({
+			mdToken: token
+		});
+		await md_connection.isInitialized();
+
 	} catch (e) {
 		rejectInit(e);
 		throw e;
@@ -158,15 +163,54 @@ export async function query(sql) {
 	await withTimeout(tablesPromise);
 
 	// Now we can safely execute our query
-	// const res = await connection.query(sql).then(arrowTableToJSON);
 	const res = await connection.query(sql).then((response) => {
 		console.log(`Received response: ${response}`);
 		return arrowTableToJSON(response);
 	  });
-	console.log(`"Result for query ${sql}:"`);
-	console.log(res);
+	console.log(`"Result for query ${sql}:"`, res);
+
+	md_query(sql);
 
 	return res;
 }
 
-export { arrowTableToJSON };
+
+export function parseJSON(fields, json) {
+	const arr = JSON.parse(json);
+
+	Object.defineProperty(arr, '_evidenceColumnTypes', {
+		enumerable: false,
+		value: fields.map((field) => ({
+			name: field.name,
+			evidenceType: apacheToEvidenceType(field.type),
+			typeFidelity: 'precise'
+		}))
+	});
+
+	return arr;
+}
+
+
+export async function md_query(sql) {
+	console.log(`"*** Running MD query *** ${sql}:"`);
+	try {
+		const result = await md_connection.evaluateQuery(sql);
+		const fields = result.data.batches[0].recordBatch.schema.fields;
+		const rows = result.data.toRows();
+		console.log('Rows: ', rows);
+		const json = JSON.stringify(rows, (key, value) =>
+			typeof value === 'bigint'
+				? value.toString()
+				: value // return everything else unchanged
+		);
+		console.log('*** Received response ***: ' + sql, json);
+		const table = result;
+		const res = parseJSON(fields, json);
+		console.log('*** Result for query ***: ' + sql, res);
+		return res;
+	} catch (err) {
+		console.log('*** Query failed ***: ' + sql, err);
+	}
+}
+
+export { arrowTableToJSON, apacheToEvidenceType };

@@ -1,1 +1,1 @@
-select * from needful_things.orders_by_month limit 10
+select * from needful_things.orders_by_month

@@ -156,7 +156,7 @@ export async function setParquetURLs(urls, append = false) {
  * @param {string} sql
  * @returns {Promise<import("apache-arrow").Table | null>}
  */
-export async function query(sql) {
+export async function local_query(sql) {
 	// After this point, the database has been initialized
 	if (!db) await initDB();
 	// We need to wait for tables to be available
@@ -168,9 +168,6 @@ export async function query(sql) {
 		return arrowTableToJSON(response);
 	  });
 	console.log(`"Result for query ${sql}:"`, res);
-
-	md_query(sql);
-
 	return res;
 }
 
@@ -187,29 +184,41 @@ export function parseJSON(fields, json) {
 		}))
 	});
 
+	let rowIndex = 0;
+
+	arr.forEach(item => {
+		item.rowIndex = rowIndex;
+  		rowIndex++;
+	});
+
 	return arr;
 }
 
 
-export async function md_query(sql) {
+/**
+ * Queries the database with the given SQL statement.
+ *
+ * @param {string} sql
+ * @returns {Promise<import("apache-arrow").Table | null>}
+ */
+export async function query(sql) {
 	console.log(`"*** Running MD query *** ${sql}:"`);
 	try {
 		const result = await md_connection.evaluateQuery(sql);
 		const fields = result.data.batches[0].recordBatch.schema.fields;
 		const rows = result.data.toRows();
-		console.log('Rows: ', rows);
 		const json = JSON.stringify(rows, (key, value) =>
 			typeof value === 'bigint'
-				? value.toString()
+				? Number(value)
 				: value // return everything else unchanged
 		);
-		console.log('*** Received response ***: ' + sql, json);
 		const table = result;
 		const res = parseJSON(fields, json);
 		console.log('*** Result for query ***: ' + sql, res);
 		return res;
 	} catch (err) {
 		console.log('*** Query failed ***: ' + sql, err);
+		return local_query(sql);
 	}
 }
 

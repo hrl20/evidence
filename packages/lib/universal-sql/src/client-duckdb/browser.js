@@ -8,7 +8,7 @@ import {
 } from '@duckdb/duckdb-wasm';
 
 export { tableFromIPC } from 'apache-arrow';
-import * as arrow from 'apache-arrow';
+
 import { MDConnection } from '@motherduck/wasm-client';
 
 /** @type {import("@duckdb/duckdb-wasm").AsyncDuckDB} */

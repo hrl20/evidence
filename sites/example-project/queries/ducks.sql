@@ -1,1 +1,1 @@
-select x as beak_width, x+1 as beak_depth from generate_series(1,10) g(x)
+select beak_width as beak_width, beak_depth as beak_depth from ducks.avoducks where beak_width > 0 and beak_depth > 0 limit 1000

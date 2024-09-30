@@ -74,7 +74,7 @@ export async function initDB() {
 		
 		resolveInit();
 
-		const token = '';
+		let token = prompt("Please enter a token:", "Token empty");
 		md_connection = MDConnection.create({
 			mdToken: token
 		});

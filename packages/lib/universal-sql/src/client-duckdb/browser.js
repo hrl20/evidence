@@ -189,7 +189,7 @@ export async function query(sql) {
 		return res;
 	} catch (err) {
 		console.log('*** Query failed ***: ' + sql, err);
-		// return local_query(sql);
+		return local_query(sql);
 	}
 }
 

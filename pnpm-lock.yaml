@@ -23,8 +23,8 @@ importers:
         specifier: 2.21.0
         version: 2.21.0
       '@duckdb/duckdb-wasm':
-        specifier: 1.28.1-dev215.0
-        version: 1.28.1-dev215.0
+        specifier: 1.28.1-dev279.0
+        version: 1.28.1-dev279.0
       '@evidence-dev/bigquery':
         specifier: link:packages/datasources/bigquery
         version: link:packages/datasources/bigquery
@@ -98,14 +98,17 @@ importers:
         specifier: link:packages/lib/universal-sql
         version: link:packages/lib/universal-sql
       '@motherduck/wasm-client':
-        specifier: 0.6.1
-        version: 0.6.1(apache-arrow@15.0.2)
+        specifier: 0.6.4
+        version: 0.6.4(apache-arrow@16.0.0)
+      '@parcel/core':
+        specifier: 2.12.0
+        version: 2.12.0(@swc/helpers@0.5.13)
       '@parcel/packager-ts':
         specifier: 2.12.0
-        version: 2.12.0
+        version: 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
       '@parcel/transformer-typescript-types':
         specifier: 2.12.0
-        version: 2.12.0(typescript@5.4.2)
+        version: 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(typescript@5.4.2)
       '@playwright/test':
         specifier: ^1.45.3
         version: 1.47.2
@@ -124,6 +127,9 @@ importers:
       '@uwdata/mosaic-sql':
         specifier: ^0.4.0
         version: 0.4.0
+      apache-arrow:
+        specifier: 16.0.0
+        version: 16.0.0
       blueimp-md5:
         specifier: 2.19.0
         version: 2.19.0
@@ -211,6 +217,9 @@ importers:
       svelte2tsx:
         specifier: 0.7.4
         version: 0.7.4(svelte@4.2.19)(typescript@5.4.2)
+      svgo:
+        specifier: 3.3.2
+        version: 3.3.2
       typescript:
         specifier: 5.4.2
         version: 5.4.2
@@ -1206,14 +1215,14 @@ importers:
   packages/lib/universal-sql:
     dependencies:
       '@duckdb/duckdb-wasm':
-        specifier: 1.28.1-dev215.0
-        version: 1.28.1-dev215.0
+        specifier: 1.28.1-dev279.0
+        version: 1.28.1-dev279.0
       '@motherduck/wasm-client':
-        specifier: 0.6.1
-        version: 0.6.1(apache-arrow@13.0.0)
+        specifier: 0.6.4
+        version: 0.6.4(apache-arrow@16.0.0)
       apache-arrow:
-        specifier: ^13.0.0
-        version: 13.0.0
+        specifier: 16.0.0
+        version: 16.0.0
       chalk:
         specifier: ^5.2.0
         version: 5.3.0
@@ -2499,8 +2508,8 @@ packages:
       search-insights:
         optional: true
 
-  '@duckdb/duckdb-wasm@1.28.1-dev215.0':
-    resolution: {integrity: sha512-RylhuWgILCVi2zqJt4bpL79IA8CU+aV4ExAqORIzPF1oX41m/+urfGVpJLSJAqIamlbOCxKYUy52yFLlCuEPJA==}
+  '@duckdb/duckdb-wasm@1.28.1-dev279.0':
+    resolution: {integrity: sha512-3nWyiiw3eVSEy2hA5oB/N7mj7+haLktt3zyO/a0Q8bIvneXV/BAzGBdK02/MRxYxGJI+H1KygjXZHV4lYpMEOQ==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -3264,10 +3273,10 @@ packages:
     resolution: {integrity: sha512-iA7+tyVqfrATAIsIRWQG+a7ZLLD0VaOCKV2Wd/v4mqIU3J9c4jx9p7S0nw1XH3gJCKNBOOwACOPYYSUu9pgT+w==}
     engines: {node: '>=12.0.0'}
 
-  '@motherduck/wasm-client@0.6.1':
-    resolution: {integrity: sha512-SGCptAfkGNBq2GvIYxKYggFRPkpSq89UCjvESiDAs2xlR0Tnk97PuW/mQJptMSbyvPxSjd5i1s/+Lc0Joam8eA==}
+  '@motherduck/wasm-client@0.6.4':
+    resolution: {integrity: sha512-s/8ZxfloilNszaeDPGD/0Wmvki4MCLqbEBWWja4p3nQzd4mj75vVrKFz2kIzglxgC1vbUDWrum6U+fF9FG3ekg==}
     peerDependencies:
-      apache-arrow: ^15.0.0
+      apache-arrow: ^16.0.0
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
@@ -4407,6 +4416,9 @@ packages:
   '@types/command-line-usage@5.0.2':
     resolution: {integrity: sha512-n7RlEEJ+4x4TS7ZQddTmNSxP+zziEG0TNsMfiRIxcIVXt71ENJ9ojeXmGO3wPoTdn7pJcU2xc3CJYMktNT6DPg==}
 
+  '@types/command-line-usage@5.0.4':
+    resolution: {integrity: sha512-BwR5KP3Es/CSht0xqBcUXS3qCAUVXwpRKsV2+arxeb65atasuXG9LykC9Ab10Cw3s2raH92ZqOeILaQbsB2ACg==}
+
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
@@ -5046,8 +5058,12 @@ packages:
     resolution: {integrity: sha512-3gvCX0GDawWz6KFNC28p65U+zGh/LZ6ZNKWNu74N6CQlKzxeoWHpi4CgEQsgRSEMuyrIIXi1Ea2syja7dwcHvw==}
     hasBin: true
 
-  apache-arrow@15.0.2:
-    resolution: {integrity: sha512-RvwlFxLRpO405PLGffx4N2PYLiF7FD86Q1hHl6J2XCWiq+tTCzpb9ngFw0apFDcXZBMpCzMuwAvA7hjyL1/73A==}
+  apache-arrow@16.0.0:
+    resolution: {integrity: sha512-bVyJeV4ahJW4XYjXefSBco0/mSSSElOzzh3Qx7tsKH+94sZaHrRotKKj1xVjON1hMUm7TODi6DnbFE73Q2h2MA==}
+    hasBin: true
+
+  apache-arrow@17.0.0:
+    resolution: {integrity: sha512-X0p7auzdnGuhYMVKYINdQssS4EcKec9TCXyez/qtJt32DrIMGbzqiaMiQ0X6fQlQpw8Fl0Qygcv4dfRAr5Gu9Q==}
     hasBin: true
 
   aproba@2.0.0:
@@ -5764,6 +5780,10 @@ packages:
     resolution: {integrity: sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==}
     engines: {node: '>=8.0.0'}
 
+  css-tree@2.2.1:
+    resolution: {integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
+
   css-tree@2.3.1:
     resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
@@ -5783,6 +5803,10 @@ packages:
   csso@4.2.0:
     resolution: {integrity: sha512-wvlcdIbf6pwKEk7vHj8/Bkc0B4ylXZruLvOgs9doS5eOsOpuodOV2zJChSpkp+pRpYQLQMeF04nr3Z68Sta9jA==}
     engines: {node: '>=8.0.0'}
+
+  csso@5.0.5:
+    resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
   cssstyle@4.1.0:
     resolution: {integrity: sha512-h66W1URKpBS5YMI/V8PyXvTMFT8SupJ1IzoIV8IeBC/ji8WVmrO8dGlTi+2dh6whmdk6BiKJLD/ZBkhWbcg6nA==}
@@ -6709,6 +6733,9 @@ packages:
 
   flatbuffers@23.5.26:
     resolution: {integrity: sha512-vE+SI9vrJDwi1oETtTIFldC/o9GsVKRM+s6EL0nQgxXlYV1Vc4Tk30hj4xGICftInKQKj1F3up2n8UbIVobISQ==}
+
+  flatbuffers@24.3.25:
+    resolution: {integrity: sha512-3HDgPbgiwWMI9zVB7VYBHaMrbOO7Gm0v+yD2FV/sCKj+9NDeVL7BOBYUuhWAQGKWOzBo8S9WdMvV0eixO233XQ==}
 
   flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
@@ -8167,6 +8194,9 @@ packages:
 
   mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
+
+  mdn-data@2.0.28:
+    resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -10064,6 +10094,11 @@ packages:
   svgo@2.8.0:
     resolution: {integrity: sha512-+N/Q9kV1+F+UeWYoSiULYo4xYSDQlTgb+ayMobAXPwMnLvop7oxKMo9OzIrX5x3eS4L4f2UHhc9axXwY8DpChg==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
+
+  svgo@3.3.2:
+    resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
 
   symbol-tree@3.2.4:
@@ -12460,9 +12495,9 @@ snapshots:
     transitivePeerDependencies:
       - '@algolia/client-search'
 
-  '@duckdb/duckdb-wasm@1.28.1-dev215.0':
+  '@duckdb/duckdb-wasm@1.28.1-dev279.0':
     dependencies:
-      apache-arrow: 15.0.2
+      apache-arrow: 17.0.0
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -13350,13 +13385,9 @@ snapshots:
       '@lezer/lr': 1.4.2
       json5: 2.2.3
 
-  '@motherduck/wasm-client@0.6.1(apache-arrow@13.0.0)':
+  '@motherduck/wasm-client@0.6.4(apache-arrow@16.0.0)':
     dependencies:
-      apache-arrow: 13.0.0
-
-  '@motherduck/wasm-client@0.6.1(apache-arrow@15.0.2)':
-    dependencies:
-      apache-arrow: 15.0.2
+      apache-arrow: 16.0.0
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     optional: true
@@ -13426,15 +13457,6 @@ snapshots:
       nullthrows: 1.1.1
     transitivePeerDependencies:
       - '@parcel/core'
-
-  '@parcel/cache@2.12.0':
-    dependencies:
-      '@parcel/fs': 2.12.0
-      '@parcel/logger': 2.12.0
-      '@parcel/utils': 2.12.0
-      lmdb: 2.8.5
-    transitivePeerDependencies:
-      - '@swc/helpers'
 
   '@parcel/cache@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)':
     dependencies:
@@ -13538,16 +13560,6 @@ snapshots:
 
   '@parcel/events@2.12.0': {}
 
-  '@parcel/fs@2.12.0':
-    dependencies:
-      '@parcel/rust': 2.12.0
-      '@parcel/types': 2.12.0
-      '@parcel/utils': 2.12.0
-      '@parcel/watcher': 2.4.1
-      '@parcel/workers': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
-    transitivePeerDependencies:
-      - '@swc/helpers'
-
   '@parcel/fs@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)':
     dependencies:
       '@parcel/core': 2.12.0(@swc/helpers@0.5.13)
@@ -13577,18 +13589,6 @@ snapshots:
       '@parcel/diagnostic': 2.12.0
       '@parcel/plugin': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
       nullthrows: 1.1.1
-    transitivePeerDependencies:
-      - '@parcel/core'
-
-  '@parcel/node-resolver-core@3.3.0':
-    dependencies:
-      '@mischnic/json-sourcemap': 0.1.1
-      '@parcel/diagnostic': 2.12.0
-      '@parcel/fs': 2.12.0
-      '@parcel/rust': 2.12.0
-      '@parcel/utils': 2.12.0
-      nullthrows: 1.1.1
-      semver: 7.6.3
     transitivePeerDependencies:
       - '@parcel/core'
 
@@ -13664,20 +13664,6 @@ snapshots:
       - '@parcel/core'
       - '@swc/helpers'
 
-  '@parcel/package-manager@2.12.0':
-    dependencies:
-      '@parcel/diagnostic': 2.12.0
-      '@parcel/fs': 2.12.0
-      '@parcel/logger': 2.12.0
-      '@parcel/node-resolver-core': 3.3.0
-      '@parcel/types': 2.12.0
-      '@parcel/utils': 2.12.0
-      '@parcel/workers': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
-      '@swc/core': 1.7.28(@swc/helpers@0.5.13)
-      semver: 7.6.3
-    transitivePeerDependencies:
-      - '@swc/helpers'
-
   '@parcel/package-manager@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)':
     dependencies:
       '@parcel/core': 2.12.0(@swc/helpers@0.5.13)
@@ -13742,13 +13728,6 @@ snapshots:
     transitivePeerDependencies:
       - '@parcel/core'
 
-  '@parcel/packager-ts@2.12.0':
-    dependencies:
-      '@parcel/plugin': 2.12.0
-    transitivePeerDependencies:
-      - '@parcel/core'
-      - '@swc/helpers'
-
   '@parcel/packager-ts@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))':
     dependencies:
       '@parcel/plugin': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
@@ -13760,13 +13739,6 @@ snapshots:
       '@parcel/plugin': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
     transitivePeerDependencies:
       - '@parcel/core'
-
-  '@parcel/plugin@2.12.0':
-    dependencies:
-      '@parcel/types': 2.12.0
-    transitivePeerDependencies:
-      - '@parcel/core'
-      - '@swc/helpers'
 
   '@parcel/plugin@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))':
     dependencies:
@@ -13991,36 +13963,10 @@ snapshots:
     transitivePeerDependencies:
       - '@parcel/core'
 
-  '@parcel/transformer-typescript-types@2.12.0(typescript@5.4.2)':
-    dependencies:
-      '@parcel/diagnostic': 2.12.0
-      '@parcel/plugin': 2.12.0
-      '@parcel/source-map': 2.1.1
-      '@parcel/ts-utils': 2.12.0(typescript@5.4.2)
-      '@parcel/utils': 2.12.0
-      nullthrows: 1.1.1
-      typescript: 5.4.2
-    transitivePeerDependencies:
-      - '@parcel/core'
-      - '@swc/helpers'
-
   '@parcel/ts-utils@2.12.0(typescript@5.4.2)':
     dependencies:
       nullthrows: 1.1.1
       typescript: 5.4.2
-
-  '@parcel/types@2.12.0':
-    dependencies:
-      '@parcel/cache': 2.12.0
-      '@parcel/diagnostic': 2.12.0
-      '@parcel/fs': 2.12.0
-      '@parcel/package-manager': 2.12.0
-      '@parcel/source-map': 2.1.1
-      '@parcel/workers': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))
-      utility-types: 3.11.0
-    transitivePeerDependencies:
-      - '@parcel/core'
-      - '@swc/helpers'
 
   '@parcel/types@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)':
     dependencies:
@@ -14108,7 +14054,7 @@ snapshots:
       '@parcel/diagnostic': 2.12.0
       '@parcel/logger': 2.12.0
       '@parcel/profiler': 2.12.0
-      '@parcel/types': 2.12.0
+      '@parcel/types': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/utils': 2.12.0
       nullthrows: 1.1.1
 
@@ -15207,6 +15153,8 @@ snapshots:
 
   '@types/command-line-usage@5.0.2': {}
 
+  '@types/command-line-usage@5.0.4': {}
+
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 20.16.6
@@ -16049,15 +15997,27 @@ snapshots:
       pad-left: 2.1.0
       tslib: 2.7.0
 
-  apache-arrow@15.0.2:
+  apache-arrow@16.0.0:
     dependencies:
       '@swc/helpers': 0.5.13
       '@types/command-line-args': 5.2.3
-      '@types/command-line-usage': 5.0.2
+      '@types/command-line-usage': 5.0.4
       '@types/node': 20.16.6
       command-line-args: 5.2.1
       command-line-usage: 7.0.1
       flatbuffers: 23.5.26
+      json-bignum: 0.0.3
+      tslib: 2.7.0
+
+  apache-arrow@17.0.0:
+    dependencies:
+      '@swc/helpers': 0.5.13
+      '@types/command-line-args': 5.2.3
+      '@types/command-line-usage': 5.0.4
+      '@types/node': 20.16.6
+      command-line-args: 5.2.1
+      command-line-usage: 7.0.1
+      flatbuffers: 24.3.25
       json-bignum: 0.0.3
       tslib: 2.7.0
 
@@ -16874,6 +16834,11 @@ snapshots:
       mdn-data: 2.0.14
       source-map: 0.6.1
 
+  css-tree@2.2.1:
+    dependencies:
+      mdn-data: 2.0.28
+      source-map-js: 1.2.1
+
   css-tree@2.3.1:
     dependencies:
       mdn-data: 2.0.30
@@ -16888,6 +16853,10 @@ snapshots:
   csso@4.2.0:
     dependencies:
       css-tree: 1.1.3
+
+  csso@5.0.5:
+    dependencies:
+      css-tree: 2.2.1
 
   cssstyle@4.1.0:
     dependencies:
@@ -18098,6 +18067,8 @@ snapshots:
   flat@5.0.2: {}
 
   flatbuffers@23.5.26: {}
+
+  flatbuffers@24.3.25: {}
 
   flatted@3.3.1: {}
 
@@ -19856,6 +19827,8 @@ snapshots:
       '@types/mdast': 3.0.15
 
   mdn-data@2.0.14: {}
+
+  mdn-data@2.0.28: {}
 
   mdn-data@2.0.30: {}
 
@@ -22059,6 +22032,16 @@ snapshots:
       csso: 4.2.0
       picocolors: 1.1.0
       stable: 0.1.8
+
+  svgo@3.3.2:
+    dependencies:
+      '@trysound/sax': 0.2.0
+      commander: 7.2.0
+      css-select: 5.1.0
+      css-tree: 2.3.1
+      css-what: 6.1.0
+      csso: 5.0.5
+      picocolors: 1.1.0
 
   symbol-tree@3.2.4: {}
 

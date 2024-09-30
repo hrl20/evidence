@@ -7,6 +7,8 @@ import {
 	VoidLogger
 } from '@duckdb/duckdb-wasm';
 
+import { Table } from 'apache-arrow';
+
 export { tableFromIPC } from 'apache-arrow';
 
 import { MDConnection } from '@motherduck/wasm-client';
@@ -171,30 +173,6 @@ export async function local_query(sql) {
 	return res;
 }
 
-
-export function parseJSON(fields, json) {
-	const arr = JSON.parse(json);
-
-	Object.defineProperty(arr, '_evidenceColumnTypes', {
-		enumerable: false,
-		value: fields.map((field) => ({
-			name: field.name,
-			evidenceType: apacheToEvidenceType(field.type),
-			typeFidelity: 'precise'
-		}))
-	});
-
-	let rowIndex = 0;
-
-	arr.forEach(item => {
-		item.rowIndex = rowIndex;
-  		rowIndex++;
-	});
-
-	return arr;
-}
-
-
 /**
  * Queries the database with the given SQL statement.
  *
@@ -204,21 +182,14 @@ export function parseJSON(fields, json) {
 export async function query(sql) {
 	console.log(`"*** Running MD query *** ${sql}:"`);
 	try {
-		const result = await md_connection.evaluateQuery(sql);
-		const fields = result.data.batches[0].recordBatch.schema.fields;
-		const rows = result.data.toRows();
-		const json = JSON.stringify(rows, (key, value) =>
-			typeof value === 'bigint'
-				? Number(value)
-				: value // return everything else unchanged
-		);
-		const table = result;
-		const res = parseJSON(fields, json);
+		const result = await md_connection.evaluateStreamingQuery(sql);
+		const batches = await result.arrowStream.readAll();
+		const res = arrowTableToJSON(new Table(batches));
 		console.log('*** Result for query ***: ' + sql, res);
 		return res;
 	} catch (err) {
 		console.log('*** Query failed ***: ' + sql, err);
-		return local_query(sql);
+		// return local_query(sql);
 	}
 }
 

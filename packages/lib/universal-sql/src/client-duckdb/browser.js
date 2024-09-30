@@ -167,7 +167,7 @@ export async function local_query(sql) {
 		console.log(`Received response: ${response}`);
 		return arrowTableToJSON(response);
 	  });
-	console.log(`"Result for query ${sql}:"`, res);
+	console.log(`"Result for query ${sql}:"`, res``);
 	return res;
 }
 

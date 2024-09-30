@@ -1,0 +1,1 @@
+select database_name || '.' || schema_name || '.' || table_name as table_full_name, table_name from duckdb_tables()

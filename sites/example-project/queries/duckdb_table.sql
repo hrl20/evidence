@@ -1,0 +1,1 @@
+select * from ${inputs.selected_table_name.value} limit 100

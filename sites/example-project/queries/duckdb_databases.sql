@@ -1,0 +1,1 @@
+select * from duckdb_databases()

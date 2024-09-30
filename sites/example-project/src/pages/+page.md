@@ -1,12 +1,18 @@
-# Welcome to the Evidence Development Workspace!
+---
+title: Welcome
+queries:
+  - duckdb_databases: duckdb_databases.sql
+  - duckdb_tables: duckdb_tables.sql
+  - duckdb_table: duckdb_table.sql
+---
 
-This workspace contains examples of all Evidence features.
+<DataTable data={duckdb_databases}/>
 
-If you are developing a new feature, add a page to this project. The page will be used as a reference for the feature, as a sandbox for anyone making changes to the feature in the future, and for general product testing.
+<Dropdown
+    name=selected_table_name
+    data={duckdb_tables}
+    value=table_full_name
+    title="Select a table"
+/>
 
-If you notice a feature is missing from this project, please:
-
-- add a page or
-- create an issue on Github.
-
-Thanks!
+<DataTable data={duckdb_table}/>

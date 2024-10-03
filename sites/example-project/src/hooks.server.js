@@ -25,7 +25,7 @@ export const handleError = (e) => {
 };
 
 /** @type {import('@sveltejs/kit').Handle} */
-export function handle({ event, resolve }) {
+export async function handle({ event, resolve }) {
 	const loading = dev
 		? `
 	setTimeout(() => {
@@ -36,5 +36,10 @@ export function handle({ event, resolve }) {
 	}, 250);`
 		: '';
 
-	return resolve(event, { transformPageChunk: ({ html }) => html.replace('/*loading*/', loading) });
+	const response = await resolve(event, { transformPageChunk: ({ html }) => html.replace('/*loading*/', loading) });
+	// Set the COOP and COEP headers
+	response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+	response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+   
+	return response;
 }

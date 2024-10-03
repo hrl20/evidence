@@ -5,7 +5,7 @@ import { Type } from 'apache-arrow';
  *
  * @param {import("apache-arrow").Type} type
  */
-function apacheToEvidenceType(type) {
+export function apacheToEvidenceType(type) {
 	switch (
 		type.typeId // maybe just replace with `typeof`
 	) {

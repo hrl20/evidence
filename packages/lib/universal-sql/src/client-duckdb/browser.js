@@ -1,4 +1,4 @@
-import { arrowTableToJSON, getPromise, withTimeout } from './both.js';
+import { arrowTableToJSON, apacheToEvidenceType, getPromise, withTimeout } from './both.js';
 import {
 	AsyncDuckDB,
 	ConsoleLogger,
@@ -7,13 +7,20 @@ import {
 	VoidLogger
 } from '@duckdb/duckdb-wasm';
 
+import { Table } from 'apache-arrow';
+
 export { tableFromIPC } from 'apache-arrow';
+
+import { MDConnection } from '@motherduck/wasm-client';
 
 /** @type {import("@duckdb/duckdb-wasm").AsyncDuckDB} */
 let db;
 
 /** @type {import("@duckdb/duckdb-wasm").AsyncDuckDBConnection} */
 let connection;
+
+/** @type {import("@motherduck/wasm-client").MDConnection} */
+let md_connection;
 
 const { resolve: resolveInit, reject: rejectInit, promise: initPromise } = getPromise();
 const { resolve: resolveTables, reject: rejectTables, promise: tablesPromise } = getPromise();
@@ -66,7 +73,15 @@ export async function initDB() {
 			}
 		});
 		connection = await db.connect();
+		
 		resolveInit();
+
+		let token = prompt("Please enter a token:", "Token empty");
+		md_connection = MDConnection.create({
+			mdToken: token
+		});
+		await md_connection.isInitialized();
+
 	} catch (e) {
 		rejectInit(e);
 		throw e;
@@ -143,16 +158,39 @@ export async function setParquetURLs(urls, append = false) {
  * @param {string} sql
  * @returns {Promise<import("apache-arrow").Table | null>}
  */
-export async function query(sql) {
+export async function local_query(sql) {
 	// After this point, the database has been initialized
 	if (!db) await initDB();
 	// We need to wait for tables to be available
 	await withTimeout(tablesPromise);
 
 	// Now we can safely execute our query
-	const res = await connection.query(sql).then(arrowTableToJSON);
-
+	const res = await connection.query(sql).then((response) => {
+		console.log(`Received response: ${response}`);
+		return arrowTableToJSON(response);
+	  });
+	console.log(`"Result for query ${sql}:"`, res);
 	return res;
 }
 
-export { arrowTableToJSON };
+/**
+ * Queries the database with the given SQL statement.
+ *
+ * @param {string} sql
+ * @returns {Promise<import("apache-arrow").Table | null>}
+ */
+export async function query(sql) {
+	console.log(`"*** Running MD query *** ${sql}:"`);
+	try {
+		const result = await md_connection.evaluateStreamingQuery(sql);
+		const batches = await result.arrowStream.readAll();
+		const res = arrowTableToJSON(new Table(batches));
+		console.log('*** Result for query ***: ' + sql, res);
+		return res;
+	} catch (err) {
+		console.log('*** Query failed ***: ' + sql, err);
+		return local_query(sql);
+	}
+}
+
+export { arrowTableToJSON, apacheToEvidenceType };

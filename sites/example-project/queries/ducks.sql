@@ -1,0 +1,1 @@
+select beak_width, beak_depth from ducks.avoducks where beak_width > 0 and beak_depth > 0 limit 1000

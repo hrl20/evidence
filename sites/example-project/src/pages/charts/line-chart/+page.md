@@ -1,10 +1,19 @@
 ---
 title: Line Chart
 queries:
-  - orders_by_month: orders_by_month.sql
-  - orders_by_category: orders_by_category.sql
+  - ducks: ducks.sql
 ---
 
+<LineChart 
+    data={ducks}
+    x=beak_width
+    y=beak_depth 
+    yAxisTitle="Beak depth vs beak width"
+    yFmt=cm
+    xFmt='cm'
+/>
+
+<!-- 
 ```sql simpler_bar
 select 'Canada' as country, 60 as value, 1990 as year
 union all
@@ -171,4 +180,4 @@ select '2021-01-07'::date as date, null as value, null as value2
   x=date
   y={['value','value2']}
   handleMissing=zero
-/>
+/> -->
